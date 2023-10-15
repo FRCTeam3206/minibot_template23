@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -44,7 +45,10 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.arcadeDrive(
-                    -m_driverController.getLeftY(), -m_driverController.getRightX()),
+                    -MathUtil.applyDeadband(
+                        m_driverController.getLeftY(), OperatorConstants.kDriveDeadband),
+                    -MathUtil.applyDeadband(
+                        m_driverController.getRightX(), OperatorConstants.kDriveDeadband)),
             m_robotDrive));
   }
 
