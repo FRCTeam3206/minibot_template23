@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Drive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,7 +21,7 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final Drive m_robotDrive = new Drive();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -50,6 +50,18 @@ public class RobotContainer {
                     -MathUtil.applyDeadband(
                         m_driverController.getRightX(), OperatorConstants.kDriveDeadband)),
             m_robotDrive));
+
+    /*
+      // alternative version of setting the default command that uses the Drive.arcadeDriveCommand()
+      m_robotDrive.setDefaultCommand(
+          m_robotDrive.arcadeDriveCommand(
+              () ->
+                  -MathUtil.applyDeadband(
+                      m_driverController.getLeftY(), OperatorConstants.kDriveDeadband),
+              () ->
+                  -MathUtil.applyDeadband(
+                      m_driverController.getRightX(), OperatorConstants.kDriveDeadband)));
+    */
   }
 
   /**
@@ -60,5 +72,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.simpleAuto(m_robotDrive);
+
+    // Alternative version of simpleAuto that used chained commands
+    // return m_robotDrive.driveTimedCommand(0.5, 2).andThen(m_robotDrive.driveTimedCommand(-0.5, 1));
   }
 }

@@ -9,10 +9,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import java.util.function.DoubleSupplier;
 
-public class DriveSubsystem extends SubsystemBase {
+public class Drive extends SubsystemBase {
   // Initialize the motors and drivetrain
   private final CANSparkMax m_leftDrive =
       new CANSparkMax(DriveConstants.kLeftDriveCanId, MotorType.kBrushless);
@@ -24,7 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
   private RelativeEncoder m_leftEncoder;
   private RelativeEncoder m_rightEncoder;
 
-  public DriveSubsystem() {
+  public Drive() {
     // restore motors to defaults so we can know how they will behave
     m_leftDrive.restoreFactoryDefaults();
     m_rightDrive.restoreFactoryDefaults();
@@ -39,11 +41,11 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot) {
-    m_drive.arcadeDrive(fwd, rot, true);
+    m_drive.arcadeDrive(fwd, rot);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_drive.tankDrive(leftSpeed, rightSpeed, true);
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   public void resetEncoders() {
@@ -61,5 +63,23 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  /*********************************************/
+  /* Advanced concepts using Command factories */
+  /*********************************************/
+
+  public Command arcadeDriveCommand(DoubleSupplier fwd, DoubleSupplier rot) {
+    // uses Suppliers which allow more flexible sources of input
+    return run(() -> m_drive.arcadeDrive(fwd.getAsDouble(), rot.getAsDouble()))
+        .withName("arcadeDrive");
+  }
+
+  public Command driveTimedCommand(double speed, double time) {
+    // Does the same thing as the frc.robot.commands.DriveTimed class
+    return run(() -> m_drive.arcadeDrive(speed, 0))
+        .withTimeout(time)
+        .finallyDo(interrupted -> m_drive.stopMotor())
+        .withName("driveTimed");
   }
 }

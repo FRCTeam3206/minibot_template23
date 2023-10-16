@@ -6,11 +6,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Drive;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
-  public static CommandBase simpleAuto(DriveSubsystem drive) {
+  public static CommandBase simpleAuto(Drive drive) {
     return Commands.sequence(new DriveTimed(0.5, 2, drive), new DriveTimed(-0.5, 1, drive));
   }
 
