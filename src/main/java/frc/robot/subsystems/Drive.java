@@ -25,7 +25,7 @@ public class Drive extends SubsystemBase {
 
   private RelativeEncoder m_leftEncoder;
   private RelativeEncoder m_rightEncoder;
-
+  
   public Drive() {
     // restore motors to defaults so we can know how they will behave
     m_leftDrive.restoreFactoryDefaults();

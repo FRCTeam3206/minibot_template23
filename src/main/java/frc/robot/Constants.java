@@ -17,6 +17,10 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
   }
+  public static class ArmConstants {
+    public static int KArmCanId = 0; //TODO add correct can ID
+    public static double armSpeed = 0.5;
+  }
 
   public static class DriveConstants {
     // SPARK MAX CAN IDs
