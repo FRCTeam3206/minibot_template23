@@ -52,15 +52,15 @@ public class RobotContainer {
             m_robotDrive));
 
     /*
-      // alternative version of setting the default command that uses the Drive.arcadeDriveCommand()
-      m_robotDrive.setDefaultCommand(
-          m_robotDrive.arcadeDriveCommand(
-              () ->
-                  -MathUtil.applyDeadband(
-                      m_driverController.getLeftY(), OperatorConstants.kDriveDeadband),
-              () ->
-                  -MathUtil.applyDeadband(
-                      m_driverController.getRightX(), OperatorConstants.kDriveDeadband)));
+    // alternative version of setting the default command that uses the Drive.arcadeDriveCommand()
+    m_robotDrive.setDefaultCommand(
+        m_robotDrive.arcadeDriveCommand(
+            () ->
+                -MathUtil.applyDeadband(
+                    m_driverController.getLeftY(), OperatorConstants.kDriveDeadband),
+            () ->
+                -MathUtil.applyDeadband(
+                    m_driverController.getRightX(), OperatorConstants.kDriveDeadband)));
     */
   }
 
@@ -74,6 +74,8 @@ public class RobotContainer {
     return Autos.simpleAuto(m_robotDrive);
 
     // Alternative version of simpleAuto that used chained commands
-    // return m_robotDrive.driveTimedCommand(0.5, 2).andThen(m_robotDrive.driveTimedCommand(-0.5, 1));
+    /*
+    return m_robotDrive.driveTimedCommand(0.5, 2).andThen(m_robotDrive.driveTimedCommand(-0.5, 1));
+    */
   }
 }
