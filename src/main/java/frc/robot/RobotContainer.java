@@ -22,7 +22,7 @@ import frc.robot.subsystems.Drive;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drive m_robotDrive = new Drive();
-
+  private final Arm m_arm = new Arm();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -32,15 +32,30 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
   }
-
+    
   private void configureBindings() {
     // Reset the encoders when the "a" button is pressed
     m_driverController
         .a()
         .debounce(0.1)
         .onTrue(new InstantCommand(() -> m_robotDrive.resetEncoders(), m_robotDrive));
-
-    // Set drive default command
+    m_arm.setDefaultCommand(
+        new RunCommand(
+            () ->
+                m_arm.setSpeed(0)
+        )
+    )
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
+        .whileTrue(new new RunCommand(
+            () ->
+                m_arm.setSpeed(1)
+        ));
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .whileTrue(new new RunCommand(
+            () ->
+                m_arm.setSpeed(-1)
+        ));
+        // Set drive default command
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () ->
