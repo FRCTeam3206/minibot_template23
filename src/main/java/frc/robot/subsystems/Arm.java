@@ -25,13 +25,6 @@ public class Arm extends SubsystemBase {
         m_armMotor.set(speed);
     }
 
-    public void turnOn(boolean activation) {
-        if(activation) {
-            m_armMotor.set(ArmConstants.armSpeed);
-        } else {
-            m_armMotor.set(0);
-        }
-    }
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
