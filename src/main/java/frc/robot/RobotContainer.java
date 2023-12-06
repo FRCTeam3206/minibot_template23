@@ -45,13 +45,13 @@ public class RobotContainer {
                 m_arm.setSpeed(0)
         )
     )
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whileTrue(new new RunCommand(
+    m_driverController.kLeftBumper
+        .whileTrue(new RunCommand(
             () ->
                 m_arm.setSpeed(1)
         ));
-    new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .whileTrue(new new RunCommand(
+    m_driverController.kRightBumper
+        .whileTrue(new RunCommand(
             () ->
                 m_arm.setSpeed(-1)
         ));
